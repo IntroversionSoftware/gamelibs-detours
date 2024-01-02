@@ -85,7 +85,9 @@ static bool detour_is_imported(PBYTE pbCode, PBYTE pbAddress)
             return true;
         }
     }
+#if !defined(__clang__) && defined(_MSC_VER)
 #pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#endif
     __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
              EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
         return false;

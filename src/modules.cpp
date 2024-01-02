@@ -149,7 +149,9 @@ PVOID WINAPI DetourFindFunction(_In_ LPCSTR pszModule,
 
     /////////////////////////////////////////////// First, try GetProcAddress.
     //
+#if !defined(__clang__) && defined(_MSC_VER)
 #pragma prefast(suppress:28752, "We don't do the unicode conversion for LoadLibraryExA.")
+#endif
     HMODULE hModule = LoadLibraryExA(pszModule, NULL, 0);
     if (hModule == NULL) {
         return NULL;
@@ -285,7 +287,9 @@ HMODULE WINAPI DetourEnumerateModules(_In_opt_ HMODULE hModuleLast)
             SetLastError(NO_ERROR);
             return (HMODULE)pDosHeader;
         }
+#if !defined(__clang__) && defined(_MSC_VER)
 #pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#endif
         __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
                  EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
             continue;
