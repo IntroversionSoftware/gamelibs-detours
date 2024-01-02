@@ -1601,8 +1601,8 @@ const CDetourDis::COPYENTRY CDetourDis::s_rceCopyTable0F[] =
 
 BOOL CDetourDis::SanityCheckSystem()
 {
-    C_ASSERT(ARRAYSIZE(CDetourDis::s_rceCopyTable) == 256);
-    C_ASSERT(ARRAYSIZE(CDetourDis::s_rceCopyTable0F) == 256);
+    static_assert(ARRAYSIZE(CDetourDis::s_rceCopyTable) == 256);
+    static_assert(ARRAYSIZE(CDetourDis::s_rceCopyTable0F) == 256);
     return TRUE;
 }
 #endif // defined(DETOURS_X64) || defined(DETOURS_X86)
